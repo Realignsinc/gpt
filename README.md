@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="Realigns%20v2o.jpg" alt="Realigns v2.0 Banner" width="100%">
+</p>
+
+
+
 # Realigns AI API – v2.0  Licensed Realigns Inc 2026-
 
 ### Official Guide for Developers and Customers  
