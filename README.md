@@ -40,6 +40,15 @@ The **Realigns AI API** is a secure, enterprise-grade AI gateway developed by **
 | **Websites** | Chatbots, lead capture, FAQ automation |
 | **WordPress** | AI widgets, support agents, admin assistants |
 | **Mobile / Systems** | iOS & Android apps, CRM / ERP integration, HR automation |
+| **IoT / Industrial Systems** | Smart kiosks, factory terminals, warehouse devices, access panels, voice-enabled machines, sensor-triggered assistants |
+
+### Industrial & Cost Advantage
+
+- Designed for **industrial and embedded environments** where cloud dependency is limited or costly  
+- Suitable for **factories, warehouses, retail kiosks, logistics hubs, and smart equipment**
+- API pricing is **approximately 60–80% lower** than traditional AI providers’ token-based billing
+- Predictable usage models ideal for **always-on devices** and **high-frequency requests**
+- Enables AI features without the operational cost burden of mainstream APIs
 
 ---
 
@@ -193,7 +202,161 @@ pip install requests
 
 ```
 
-Usage Rules & Fair Policy
+## 🎙 Realigns GPT v2o – Voice TTS API (Beta)
+
+**Engine:** Piper TTS  
+**Voice:** US English (Ryan)  
+**Output:** Raw WAV audio  
+**Use Case:** Voice assistants, kiosks, IoT devices, IVR, accessibility, AI agents
+
+---
+
+### 🔊 Supported Voice (Current)
+
+- **Language:** `en-US`
+- **Model Mapping:** `en_US-ryan-medium.onnx`
+- **Quality:** Natural, neutral US accent
+- **Text Limit:** ~400 characters per request (validated server-side)
+
+> Additional voices and languages (e.g. Urdu) can be enabled in future versions behind the `lang` field.
+
+---
+
+## Endpoint
+
+```http
+POST https://gpt-api.realignsinc.com/voice/tts
+```
+Required Headers
+```
+Content-Type: application/json
+x-api-key: YOUR_REALIGNS_API_KEY
+```
+Request Body
+```
+{
+  "text": "This is Realigns AI speaking.",
+  "lang": "en-US"
+}
+```
+Field	Type	Required	Notes
+text	string	✅	Max ~400 characters
+lang	string	optional	Default: en-US
+Response
+
+Content-Type: `audio/wav`
+
+Body: `Binary WAV audio stream`
+
+Example headers:
+```
+Content-Type: audio/wav
+Content-Disposition: inline; filename="voice.wav"
+```
+Voice Integration Methods
+```
+1️⃣ cURL (Save WAV to file)
+curl -X POST https://gpt-api.realignsinc.com/voice/tts \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: YOUR_REALIGNS_API_KEY" \
+  -d '{"text":"This is Realigns AI speaking.","lang":"en-US"}' \
+  --output voice-test.wav
+```
+2️⃣ PHP (WordPress / Backend)
+```
+<?php
+$api_url = 'https://gpt-api.realignsinc.com/voice/tts';
+$api_key = 'YOUR_REALIGNS_API_KEY';
+
+$payload = [
+  'text' => 'Welcome to Realigns AI voice.',
+  'lang' => 'en-US',
+];
+
+$response = wp_remote_post($api_url, [
+  'headers' => [
+    'Content-Type' => 'application/json',
+    'x-api-key'    => $api_key,
+  ],
+  'body'    => json_encode($payload),
+  'timeout' => 60,
+]);
+
+if (is_wp_error($response)) {
+  error_log('TTS error: ' . $response->get_error_message());
+  return;
+}
+
+$audio = wp_remote_retrieve_body($response);
+file_put_contents(WP_CONTENT_DIR . '/uploads/realigns-tts.wav', $audio);
+```
+3️⃣ Browser JavaScript (Direct Playback)
+```
+async function speakWithRealigns(text) {
+  const res = await fetch("https://gpt-api.realignsinc.com/voice/tts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": "YOUR_REALIGNS_API_KEY",
+    },
+    body: JSON.stringify({ text, lang: "en-US" }),
+  });
+
+  if (!res.ok) {
+    console.error("TTS error:", await res.text());
+    return;
+  }
+
+  const audioBlob = await res.blob();
+  const audio = new Audio(URL.createObjectURL(audioBlob));
+  audio.play();
+}
+
+// Example usage
+speakWithRealigns("Realigns AI voice is now live.");
+```
+4️⃣ Node.js (Save WAV to Disk)
+```
+import fs from "fs";
+import fetch from "node-fetch";
+
+async function generateTts() {
+  const res = await fetch("https://gpt-api.realignsinc.com/voice/tts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": "YOUR_REALIGNS_API_KEY",
+    },
+    body: JSON.stringify({
+      text: "This is Realigns AI speaking from Node.js.",
+      lang: "en-US",
+    }),
+  });
+
+  if (!res.ok) {
+    console.error("TTS error:", await res.text());
+    return;
+  }
+
+  const buffer = Buffer.from(await res.arrayBuffer());
+  fs.writeFileSync("voice-test.wav", buffer);
+  console.log("Saved voice-test.wav");
+}
+
+generateTts();
+```
+## ⚠️ Notes for Production
+
+
+Use backend or gateway proxy for mobile & IoT devices
+
+Avoid exposing API keys in firmware or frontend apps
+
+Designed for short, real-time speech (assistants, alerts, responses)
+
+
+
+##  Rules & Fair Policy
 
 All API keys are subject to rate limits and abuse monitoring.
 
@@ -209,13 +372,18 @@ All API keys are subject to rate limits and abuse monitoring.
 
 ❌ Unlicensed medical advice
 
-Support & Contact
+## Support & Contact
 
 Email: distribution@api.realignsinc.com - support@realignsinc.com
 
 URL: https://www.realignsinc.com -  https://ai.realignsinc.com
 
 Developed by; REALIGNS AL LAB- International 2024-2025
+
+📄 License
+
+This gateway wraps local models and open-source components like llama.cpp and piper-tts.
+Please respect all upstream licenses for models and libraries you use.
 
 © Realigns Inc. – 2026 | All rights reserved.
 
