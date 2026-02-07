@@ -6,6 +6,8 @@
 
 # Realigns AI API – v2.0  Licensed Realigns Inc 2026-
 
+“Realigns AI uses self-hosted local inference running on private infrastructure, ensuring ultra-low latency, full data control, and zero third-party dependency.”
+
 ### Official Guide for Developers and Customers  
 Test Api (limited Free) ```https://realignsinc.com/free-gpt/```
 About api: ```https://realignsinc.com/gpt-api/  ```
