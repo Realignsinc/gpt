@@ -220,7 +220,7 @@ pip install requests
 - **Quality:** Natural, neutral US accent
 - **Text Limit:** ~400 characters per request (validated server-side)
 
-> Additional voices and languages (e.g. Urdu) can be enabled in future versions behind the `lang` field.
+> Additional voices and languages (e.g. Urdu, Thai, Arabic) can be enabled soon.
 
 ---
 
@@ -242,7 +242,7 @@ Request Body
 }
 ```
 Field	Type	Required	Notes
-text	string	✅	Max ~400 characters
+text	string-	Max ~400 characters (fast response)
 lang	string	optional	Default: en-US
 Response
 
@@ -382,10 +382,7 @@ URL: https://www.realignsinc.com -  https://ai.realignsinc.com
 
 Developed by; REALIGNS AL LAB- International 2024-2025
 
-📄 License
-
-This gateway wraps local models and open-source components like llama.cpp and piper-tts.
-Please respect all upstream licenses for models and libraries you use.
+📄 License- Realigns. Inc
 
 © Realigns Inc. – 2026 | All rights reserved.
 
